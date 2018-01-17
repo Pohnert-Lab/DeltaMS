@@ -1,0 +1,7 @@
+Isotope in unlabeled Sample: **`r isoD@isotope1`**    
+Isotope in labeled Sample: **`r isoD@isotope2`**  
+
+`r isoD@iRatio[1]`% **`r isoD@isotope1`**    
+`r isoD@iRatio[2]`% **`r isoD@isotope2`**    
+
+The allowed isotope ratio deviation was set to **`r isoD@errRatio`%** with a maximum standard deviation in between replicates of **`r isoD@maxSD`%**.   

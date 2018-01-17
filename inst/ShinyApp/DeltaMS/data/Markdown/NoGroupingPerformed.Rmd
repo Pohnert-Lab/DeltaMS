@@ -1,0 +1,1 @@
+No grouping performed, since only one file was analysed.

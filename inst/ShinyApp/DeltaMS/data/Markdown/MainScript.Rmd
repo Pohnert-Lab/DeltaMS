@@ -1,0 +1,127 @@
+---
+title: "DeltaMS Analysis Settings Overview"
+date: "`r format(Sys.time(), '%d %B, %Y')`" 
+output: html_document
+---
+___
+<style>
+  .col2 {
+    columns: 2 100px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 100px; /* chrome, safari */
+    -moz-columns: 2 100px;    /* firefox */
+  }
+</style>
+
+
+```{r child = "TypeofExp1.Rmd", eval = (isoD@TypeofExp == 1), echo = FALSE}
+```  
+
+```{r child = "TypeofExp2.Rmd", eval = (isoD@TypeofExp == 2), echo = FALSE}
+```
+
+```{r child = "TypeofExp3.Rmd", eval = (isoD@TypeofExp == 3), echo = FALSE}
+```
+
+```{r child = "SelectTwoIsotopes.Rmd", eval = (isoD@iOdm == "Select two isotopes" && isoD@TypeofExp !=3), echo = FALSE}
+```
+
+$\Delta$ m = **`r isoD@isotopeMassDiff`**    
+
+```{r child = "deltaMmanual.Rmd", eval = (isoD@iOdm == "Set \u0394 m manually" && isoD@TypeofExp !=3), echo = FALSE}
+```
+
+
+Charge for desired ions was set to **`r isoD@charge`**.
+
+___
+
+### Analyzed files:
+
+
+```{r echo=FALSE}
+
+if(isoD@TypeofExp==1){
+options(knitr.kable.NA = "")
+namesFolder<-basename(isoD@WD)
+filesInfolders<-list.files(isoD@WD, pattern = isoD@MSfilePattern, ignore.case = TRUE)
+df<-data.frame(filesInfolders)
+names(df)<-paste0(namesFolder,"*")
+knitr::kable(df, format = "markdown", row.names = FALSE,align = "c", caption = NULL)
+}
+
+if(isoD@TypeofExp==2){
+options(knitr.kable.NA = "")
+namesFolder<-c(isoD@unLabeledS,isoD@LabeledS)
+folderpaths<-as.list(file.path(isoD@WD, namesFolder))
+filesInfolders<-lapply(folderpaths, function(i) {list.files(i, pattern = isoD@MSfilePattern, ignore.case = TRUE)})
+names(filesInfolders)<-c("unlabeled Samples", "labeled Samples")
+filesInfolders<-lapply(filesInfolders, `length<-`, max(lengths(filesInfolders)))
+foldertable<-as.data.frame(filesInfolders, optional = TRUE)
+foldertableM<-as.matrix(foldertable)
+foldertableM<-rbind(paste0(namesFolder,"*"), foldertableM)
+knitr::kable(foldertableM, format = "markdown", row.names = FALSE,align = "c", caption =NULL)
+  }
+
+if(isoD@TypeofExp==3){
+options(knitr.kable.NA = "")
+namesFolder<-c(isoD@uC,isoD@lC,isoD@uT,isoD@lT)
+folderpaths<-as.list(file.path(isoD@WD, namesFolder))
+filesInfolders<-lapply(folderpaths, function(i) {list.files(i, pattern = isoD@MSfilePattern, ignore.case = TRUE)})
+names(filesInfolders)<-c("unlabeled Control", "labeled Control", "unlabeled Treatment", "labeled Treatment")
+filesInfolders<-lapply(filesInfolders, `length<-`, max(lengths(filesInfolders)))
+foldertable<-as.data.frame(filesInfolders, optional = TRUE)
+foldertableM<-as.matrix(foldertable)
+foldertableM<-rbind(paste0(namesFolder,"*"), foldertableM)
+knitr::kable(foldertableM, format = "markdown", row.names = FALSE,align = "c", caption =NULL)
+}
+```
+*Name of folder with MS-files
+
+___  
+
+### Peakdetection  
+```{r child = "matchedFilter.Rmd", eval = (isoD@methodPD == "matchedFilter"), echo = FALSE}
+```
+
+```{r child = "centWave.Rmd",eval = (isoD@methodPD == "centWave"), echo = FALSE}
+``` 
+
+___  
+
+### Grouping
+```{r child = "GroupingPerformed.Rmd", eval = (isoD@NrFi > 1), echo = FALSE}
+```
+
+```{r child = "NoGroupingPerformed.Rmd", eval = (isoD@NrFi == 1), echo = FALSE}
+```
+
+___  
+ 
+
+### Retention time correction
+```{r child = "NoRTcorrectionPerformed.Rmd", eval = (isoD@NrFi == 1), echo = FALSE}
+```
+
+```{r child = "peakgroupsLinear.Rmd", eval = (isoD@retMeth == "peakgroups" && isoD@smooth == "linear" && isoD@NrFi > 1), echo = FALSE}
+```
+
+```{r child = "peakgroupsLoess.Rmd", eval = (isoD@retMeth == "peakgroups" && isoD@smooth == "loess" && isoD@NrFi > 1), echo = FALSE}
+```
+
+```{r child = "obiwarp.Rmd",eval = (isoD@retMeth == "obiwarp" && isoD@NrFi > 1), echo = FALSE}
+```
+  
+___  
+
+### DeltaMS Settings  
+
+|Parameter          | Value                       | Parameter          | Value                      |
+|:----              | :----                       | :----              | :----                      |
+|Rtwindow           | `r isoD@Rtwindow`           | ppmw               | `r isoD@ppmw`              |
+|noiseCutoff        | `r isoD@noiseCutoff`        | monoTol            | `r isoD@monoTol`           |
+|enriTol            | `r isoD@enriTol`            | intChoice          | `r isoD@intChoice`         |
+|varEQ              | `r isoD@varEQ`              | alpha              | `r isoD@alpha`             |
+|numAtom            | `r isoD@numAtom`            | dpeak              | `r isoD@dpeak`             |
+|maxLT              | `r isoD@maxLT`              | compareOnlyDistros | `r isoD@compareOnlyDistros`|
+Table: **DeltaMS options**    
+

@@ -1,0 +1,6 @@
+|Parameter        | Value                         | Parameter   | Value                   |
+|:----            | :----                         | :----       | :----                   |
+|plottype         | `r isoD@plottypePeakgroups`   | smooth      | `r isoD@smooth`         |
+|family           | `r isoD@family`               | span        | `r isoD@span`           |
+|missing          | `r isoD@missing`              | extra       | `r isoD@extra`          |
+Table: **Peakgroups options**  

@@ -1,0 +1,7 @@
+|Parameter | Value | Parameter | Value |
+|:----      | :----                     |:----          | :----                  |
+| FWMH      | `r isoD@fwhm`             | step          | `r isoD@step`          |
+| steps     | `r isoD@steps`            | max           | `r isoD@max`           |
+| snthresh  | `r isoD@snthreshMatched`  | mzdiffMatched | `r isoD@mzdiffMatched` |
+
+Table: **matchedFilter options**

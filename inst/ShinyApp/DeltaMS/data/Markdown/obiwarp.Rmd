@@ -1,0 +1,9 @@
+|Parameter        | Value                   | Parameter   | Value               |
+|:----            | :----                   | :----       | :----               |
+|plottype         | `r isoD@plottype`       | response    | `r isoD@response`   |
+|profStep         | `r isoD@profStep`       | center      | `r isoD@center`     |
+|initPenalty      | `r isoD@initPenalty`    | distFunc    | `r isoD@distFunc`   |
+|gapInit          | `r isoD@gapInit`        | gapExtend   | `r isoD@gapExtend`  |
+|factorDiag       | `r isoD@factorDiag`     | factorGap   | `r isoD@factorGap`  |
+|localAlignment   | `r isoD@localAlignment` | 
+Table: **obiwarp options**  

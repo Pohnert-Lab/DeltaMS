@@ -1,0 +1,4 @@
+`r (isoD@iRatio[1]/(isoD@iRatio[1]+isoD@iRatio[2]))*100`% isotope 1  
+`r (isoD@iRatio[2]/(isoD@iRatio[1]+isoD@iRatio[2]))*100`% isotope 2
+
+The allowed isotope ratio deviation was set to **`r isoD@errRatio`%** with a maximum standard deviation in between replicates of **`r isoD@maxSD`%**.   

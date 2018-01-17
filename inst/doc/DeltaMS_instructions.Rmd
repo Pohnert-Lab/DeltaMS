@@ -1,0 +1,179 @@
+---
+title: "DeltaMS Usage information"
+author: "Tim Baumeister"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{DeltaMS instructions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# File preparation
+
+## Slicing thermo raw files which have been recorded using the polarity switching methods.
+
+If data are recorded using polarity switching methods the files have to be divided into a file containing the positive ionization mode data and a file 
+
+1.	Get the raw file slicer from your Thermo distributor
+2.	Install according to the requirements
+3.	Open Xcalibur QualBrowser
+4.	Click on top toolbar “Tools” (1) and then select the “Slicer” (2)
+5.	Select your “Input”(3) file and the “Output” file (4)
+6.	Select the “Scan filter” which you like to export (5)
+7.	Click on “Create New File”(6)
+
+![](media/pic1.jpeg)
+
+## File conversion of thermo raw files using the thermo file converter
+
+1. Open Xcalibur
+2. Click on top toolbar "Tools" (1) and then select the "File converter" (2)
+3. Select your "Source data type" (3) and the folder where the data resides by using the "Browse..." button (4).
+4. Select the file you like to convert and choose the "Destination data type:" as ANDI files *.cdf. (5)
+5. Finally click on "Add Job(s)" (7) and "Convert" (8)
+
+![](media/pic2.jpeg)
+
+
+## File conversion using proteowizard (Chambers et al. 2012)
+Download and install the latest proteowizard version from:
+
+http://proteowizard.sourceforge.net/
+
+Run the program using the following settings:
+
+https://xcmsonline.scripps.edu/docs/fileformats.html
+
+**NOTE:** If the command line version of proteowizard is used the polarity separation (slicing) from e.g. Thermo raw files can be made directly there.
+
+
+# Installation of programs
+## Requirements:
+
+- An internet browser *eg*. [Firefox](https://www.mozilla.org/en-US/)
+- Java (for [rJava](https://cran.r-project.org/web/packages/rJava/index.html))  https://www.java.com/
+- [Adobe reader](https://get.adobe.com/de/reader/) or related program 
+
+## Installing DeltaMS
+1. Install missing packages using following function:
+```
+MissingPackagesDeltaMS()
+```
+2. X13CMS (Huang *et al.* 2014) is required
+a) Download X13CMS tar.gz file from the Patti lab [homepage](http://pattilab.wustl.edu/software/x13cms/x13cms.php)
+ b) Install the package as the DeltaMS package was installed.
+ 
+# Working with DeltaMS
+
+## Starting DeltaMS
+
+Type in your console:
+ 
+ ```
+ library(DeltaMS)
+ RunDeltaMS()
+ ```
+ 
+## Closing DeltaMS
+ Close the browser tab and press the "Stop" button inside RStudio or press "escape" alternatively.
+ 
+**Note:** It is recommended to clear the workspace after a performed analysis using the brush symbol in the environment or the command:
+```
+rm(list=ls())
+```
+
+## Locating DeltaMS save files
+DeltaMS saves settings as bookmarks which reside inside the “shiny_bookmarks” folder inside the DeltaMS package folder in the R package library. To share or delete a DeltaMS bookmark, the whole bookmark folder has to be used (including input.rds and values.rds files). 
+
+![](media/pic3.jpeg)
+
+To get the path to the “shiny_bookmarks” folder, copy and execute this line in RStudio console: 
+```
+LocateDeltaMSSettings()
+``` 
+
+## Folder structure
+
+The top folder that contains other folders or MS files directly is called the working directory (WD). Labeling of the folders is up to the user. For the isotope signature analysis, MS files have to be placed inside the WD. 
+
+**Isotope signature**
+
+* WD
+  * MS files
+
+**Dataset comparison**
+
+* WD
+  * labeled data
+    * MS files
+  * unlabeled data
+    * MS files
+    
+**Isotopologue-guided perturbation analysis**
+
+* WD
+  * labeled control
+    * MS files
+  * unlabeled control
+    * MS files
+  * labeled treatment
+    * MS files
+  * unlabeled treatment
+    * MS files
+
+    
+## DeltaMS analysis
+
+In general, several analyses, using different settings, can be performed in a row.
+For every analysis, a new DeltaMS_results_date_time folder is created inside the WD.
+
+![**1.** Main window after execution of RunDeltaMS()](media/picDMS1.jpeg)
+
+
+![**2.** Left sidebar appears when one of the three analysis types is selected](media/picDMS2.jpeg)
+
+
+![**3.** To select a folder with MS files, press the Select Folder button on the top left. If folder structure does not the fit the type of analysis, an error message will be returned](media/picDMS3.jpeg)
+
+
+![**4.1** *Isotope signature*: When the folder is selected, captions for the plots can be chosen. The “Reassign” button allows a later adjustment of the captions.](media/picDMS4.jpeg)
+
+
+![**4.2** *Dataset comparison*: If two datasets shall be compared, one dataset has to be declared as the labeled sample class.](media/picDMS5.jpeg)
+
+
+![**4.3** *Isotopologue-guided perturbation analysis*: DeltaMS expects four folders with MS files that have to be assigned to the analysis specific groups: Labeled control, unlabeled control, labeled treatment, and unlabeled treatment.](media/picDMS6.jpeg)
+
+
+![**5.** Select the mass difference either by selecting to isotopes (blue box) or setting a manual value after selection of the “Set delta m manually” radio button (yellow box). The isotope ratio can be set manually, or the naturally occurring ratio can be selected (green box). Furthermore, the allowed relative deviation of the intensity ratios and the maximum allowed relative standard deviation (RSD) in between replicates can be set (purple box). Additionally the charge can be set as the absolute value (orange box). A charge unequal to 1 leads to an altered mass difference through division of the chosen mass difference and the charge. ](media/picDMS7.jpeg)
+
+
+![**6.** The files names of the generated plots and tables can be changed under “Report Settings”.](media/picDMS8.jpeg)
+
+
+![**7.** Peak detection, grouping, and retention time correction parameters can be adjusted in the specific tabs. The nomenclature is adapted from the original XCMS and X13CMS R arguments.](media/picDMS9.jpeg)
+
+
+![**8.** The DeltaMS and X13CMS specific parameters are pooled in the ”DeltaMS Settings” tab. After all parameters are set, the analysis can be started, pressing the “Start Analysis” button (bottom left).](media/picDMS10.jpeg)
+
+
+![**9.** It is recommended to save the chosen settings using the “Save Current State” button on the top left (yellow box). No special characters are allowed.](media/picDMS11.jpeg)
+
+
+![**10.** To load a former state, the “Load Former State” button has to be pressed (yellow box). DeltaMS finds former save states automatically. After selecting a save state, a hyperlink has to be generated (blue box).](media/picDMS12.jpeg)
+
+
+![**11.** The generated hyperlink has to be pressed, and a new instance of DeltaMS will be opened inside the browser.](media/picDMS13.jpeg)
+
+
+![**12.** After an old save state is restored, the former DeltaMS window can be closed.](media/picDMS14.jpeg)
+
+# References
+Chambers, M. C., Maclean, B., Burke, R., Amodei, D., Ruderman, D. L., Neumann, S., et al. (2012). A cross-platform toolkit for mass spectrometry and proteomics. [Opinion and Comment]. Nat. Biotech., 30(10), 918-920, [doi:10.1038/nbt.2377](https://www.nature.com/articles/nbt.2377)
+
+http://www.nature.com/nbt/journal/v30/n10/abs/nbt.2377.html#supplementary-information.
+
+Huang, X., Chen, Y. J., Cho, K., Nikolskiy, I., Crawford, P. A., & Patti, G. J. (2014). X13CMS: global tracking of isotopic labels in untargeted metabolomics. Anal. Chem., 86(3), 1632-1639, [doi:10.1021/ac403384n](http://pubs.acs.org/doi/abs/10.1021/ac403384n).
+
+

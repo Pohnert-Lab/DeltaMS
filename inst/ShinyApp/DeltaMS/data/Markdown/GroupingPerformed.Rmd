@@ -1,0 +1,7 @@
+|Parameter  | Value             | Parameter | Value             |
+|:----      | :----             |:----      | :----             |
+| bw        | `r isoD@bw`       | mzwid     | `r isoD@mzwid`    |
+| minfrac   | `r isoD@minfrac`  | minsamp   | `r isoD@minsamp`  |
+| max       | `r isoD@maxN`     |
+
+Table: **Density options** 

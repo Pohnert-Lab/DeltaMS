@@ -1,0 +1,9 @@
+|Parameter                      | Value                 | Parameter             | Value |
+|:----                          | :----                 |:----                  | :----|
+| ppm                           | `r isoD@ppm`          | peakwidth (min / max) | `r paste(isoD@peakwidthMIN, "/", isoD@peakwidthMAX)` |
+| prefilter (peaks / intensity) | `r paste(isoD@prefilterPeakNr, "/" ,isoD@prefilterIntensity) ` | mzdiff | `r isoD@mzdiffCent` |
+| snthresh                      | `r isoD@snthreshCent` | noise                 | `r isoD@noise` |
+| polarity                      | `r isoD@polarity`     | mzCenterFun           | `r isoD@mzCenterFun` |
+| integrate                     | `r isoD@integrate`    |
+  
+Table: **centWave options**  
