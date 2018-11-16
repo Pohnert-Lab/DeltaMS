@@ -5,7 +5,7 @@ To install DeltaMS copy-paste the following code:
 
 ```
 if(!"devtools" %in% installed.packages()[,"Package"]){
-    install.packages"devtools"}
+    install.packages("devtools")}
 	
 library(devtools)
 
