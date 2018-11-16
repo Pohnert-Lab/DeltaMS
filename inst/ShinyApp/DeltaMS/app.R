@@ -131,9 +131,7 @@ shinyApp(enableBookmarking = "server", ui = function(req){
     observeEvent(input$aboutDeltaMS, {
       showModal(
         modalDialog(title = "About DeltaMS",
-                    HTML("Version 1.0.0 <hr>To cite the DeltaMS package in publications use:<br> 
-					Baumeister, T.,Ueberschaar, N.,Schmidt-Heck, W.,Mohr, J.F.,Deicke, M.,Wichard, T.,Guthke,
-					R.,Pohnert, G.<br> DeltaMS: a tool to track isotopologues in GC- and LC-MS data Metabolomics, 14:41 (2018)"),
+                    "Will follow as soon as published",
                     footer = modalButton("Cancel"),
                     easyClose = TRUE
         ))
@@ -468,17 +466,10 @@ shinyApp(enableBookmarking = "server", ui = function(req){
 
 
     ## Choose directory (experiment dependent)
-	
-	WD.react<-reactiveVal(value = getwd()) # Reactive value to change initial folder to last chosen folder.
-	
     observeEvent(input$chDir, {
       if(canUseJava()){
-      isoD@WD<<-jchoose.dir(caption="Select path to MS-files containing folders", default = WD.react())
-	  WD.react(isoD@WD)
-      }else{
-	  isoD@WD<<-tcltk::tk_choose.dir(caption="Select path to MS-files containing folders", default = WD.react())
-	  WD.react(isoD@WD)
-	  }
+        isoD@WD<<-jchoose.dir(caption="Select path to MS-files containing folders")
+      }else{isoD@WD<<-tcltk::tk_choose.dir(caption="Select path to MS-files containing folders")}
       if (!identical(isoD@WD, character(0))) {
         normWDD<-normalizePath(isoD@WD)
         if(isoD@TypeofExp!=1){

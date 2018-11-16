@@ -1,7 +1,7 @@
 Package: DeltaMS
 Type: Package
 Title: Isotopologue finder
-Version: 1.0.0
+Version: 0.99.8
 Author: Tim Baumeister, Wolfgang Schmidt-Heck, Nico Ueberschaar
 Maintainer: Tim Baumeister <tbaumeister@ice.mpg.de>
 Description: Find isotopologues in complex LC/GC-MS data files.
