@@ -474,12 +474,11 @@ shinyApp(enableBookmarking = "server", ui = function(req){
     observeEvent(input$chDir, {
       if(canUseJava()){
       isoD@WD<<-jchoose.dir(caption="Select path to MS-files containing folders", default = WD.react())
-	  WD.react(isoD@WD)
       }else{
 	  isoD@WD<<-tcltk::tk_choose.dir(caption="Select path to MS-files containing folders", default = WD.react())
-	  WD.react(isoD@WD)
 	  }
       if (!identical(isoD@WD, character(0))) {
+        WD.react(isoD@WD)
         normWDD<-normalizePath(isoD@WD)
         if(isoD@TypeofExp!=1){
         isoD@MSFiles<<-(list.files(file.path(isoD@WD,names(CheckFolders(isoD@WD,isoD@MSfilePattern))), full.names = TRUE,pattern = isoD@MSfilePattern,ignore.case = TRUE))
