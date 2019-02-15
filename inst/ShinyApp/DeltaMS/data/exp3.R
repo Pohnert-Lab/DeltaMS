@@ -144,7 +144,7 @@ Sys.sleep(0.2)
 # Setting variables for X13CMS
   namesFolder<-c(isoD@uC,isoD@lC,isoD@uT,isoD@lT)
   folderpaths<-as.list(file.path(isoD@WD, namesFolder))
-  filesInfolders<-lapply(folderpaths, function(i) {list.files(i, pattern = isoD@MSfilePattern)})
+  filesInfolders<-lapply(folderpaths, function(i) {list.files(i, pattern = isoD@MSfilePattern, ignore.case = TRUE, full.names = FALSE)})
   MSpattern<-paste0(".", tail(unlist(strsplit(filesInfolders[[1]][1],"[[:punct:]]")),1))
   filesInfolders<-lapply(filesInfolders, function(i) {sub(MSpattern, "",i)})
   names(filesInfolders)<-c("unlabeled Control", "labeled Control", "unlabeled Treatment", "labeled Treatment")
