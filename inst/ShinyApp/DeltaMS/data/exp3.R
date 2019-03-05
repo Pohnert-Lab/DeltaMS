@@ -7,7 +7,7 @@ withProgress(message = "Analysis progress:", value  = 0, {
 
   if (isoD@methodPD == "centWave") {
 
-    incProgress(1/15, detail = "Peakdetection (centWave)")
+    incProgress(1/17, detail = "Peakdetection (centWave)")
     Sys.sleep(0.2)
 
     if(isoD@integrate == "Use filtered data"){
@@ -29,7 +29,7 @@ withProgress(message = "Analysis progress:", value  = 0, {
                     verbose.columns = isoD@verboseColumns)
   } else {
 
-    incProgress(1/15, detail = "Peakdetection (matchedFilter)")
+    incProgress(1/17, detail = "Peakdetection (matchedFilter)")
     Sys.sleep(0.2)
 
     xset <- xcmsSet(files = isoD@MSFiles,
@@ -56,7 +56,7 @@ xsetUpdate<-c(xsetSplit[[isoD@uC]],xsetSplit[[isoD@uT]],xsetSplit[[isoD@lC]],xse
 
 ### First Grouping
 
-incProgress(1/15, detail = "First grouping")
+incProgress(1/17, detail = "First grouping")
 Sys.sleep(0.2)
 
   xset2 <- group(xsetUpdate,
@@ -72,7 +72,7 @@ Sys.sleep(0.2)
    pdf(file = file.path(resultsDir,"Retention time correction.pdf"))}
   if (isoD@retMeth == "obiwarp") {
 
-    incProgress(1/15, detail = "Retention time correction (obiwarp)")
+    incProgress(1/17, detail = "Retention time correction (obiwarp)")
     Sys.sleep(0.2)
 
     if (isoD@center == 0){
@@ -104,7 +104,7 @@ Sys.sleep(0.2)
                       initPenalty = as.numeric(isoD@initPenalty))
     }} else {
 
-      incProgress(1/15, detail = "Retention time correction (Peakgroups)")
+      incProgress(1/17, detail = "Retention time correction (Peakgroups)")
       Sys.sleep(0.2)
 
       xset2 <- retcor(xset2,
@@ -120,7 +120,7 @@ Sys.sleep(0.2)
   dev.off()} # end of pdf retention time correction
 
 
-  incProgress(1/15, detail = "Second grouping")
+  incProgress(1/17, detail = "Second grouping")
   Sys.sleep(0.2)
 
   xset2 <- group(xset2,
@@ -132,7 +132,7 @@ Sys.sleep(0.2)
 
   ### Fillpeaks
 
-  incProgress(1/15, detail = "Fillpeaks")
+  incProgress(1/17, detail = "Fillpeaks")
   Sys.sleep(0.2)
 
 
@@ -155,7 +155,7 @@ sNperturbation <- c(filesInfolders$`unlabeled Treatment`,filesInfolders$`labeled
 
 # labeling report for control samples:
 
-incProgress(1/15, detail = paste("Get IsoLabelReport", isoD@condition1))
+incProgress(1/17, detail = paste("Get IsoLabelReport", isoD@condition1))
 Sys.sleep(0.2)
 
 
@@ -178,7 +178,7 @@ labelsCtrl <<- getIsoLabelReport(xcmsSet = xset3,
 
 # labeling report for LPS-treated samples:
 
-incProgress(1/15, detail = paste("Get IsoLabelReport", isoD@condition2))
+incProgress(1/17, detail = paste("Get IsoLabelReport", isoD@condition2))
 Sys.sleep(0.2)
 
 labelsPerturbation <<- getIsoLabelReport(xcmsSet = xset3,
@@ -206,7 +206,7 @@ classes2 <- c(rep("ulSamples", length(filesInfolders$`unlabeled Treatment`)), re
 
 # diffReport comparing labeling patterns in control vs LPS-treated samples:
 
-incProgress(1/15, detail = "Get IsoDiffReport")
+incProgress(1/17, detail = "Get IsoDiffReport")
 Sys.sleep(0.2)
 
 isoDiff = getIsoDiffReport(labelsData1 = labelsCtrl,
@@ -221,7 +221,7 @@ isoDiff = getIsoDiffReport(labelsData1 = labelsCtrl,
 
 # print labeling report to a text file (recommended to open in Excel)
 
-incProgress(1/15, detail = "Print IsoList")
+incProgress(1/17, detail = "Print IsoList")
 Sys.sleep(0.2)
 
 
@@ -229,27 +229,47 @@ printIsoListOutputs(listReport = labelsCtrl,
                     outputfile = file.path(resultsDir,"labelsCtrl.txt"))
 
 # print pdf of isotopologue groups in a single labeling report plotted as relative intensity distributions
-incProgress(1/15, detail = "Plot LabelReport (relative intensities)")
+incProgress(1/17, detail = "Plot LabelReport Control (relative intensities)")
 Sys.sleep(0.2)
 
 plotLabelReport(isoLabelReport = labelsCtrl,
                 intOption = "rel",
                 classes = classes1,
                 labeledSamples = "lSamples",
-                outputfile = file.path(resultsDir, paste0(isoD@pdfRel,".pdf")))
+                outputfile = file.path(resultsDir, paste0(isoD@pdfRel,"_control.pdf")))
+			
+# print pdf of isotopologue groups in a single labeling report plotted as relative intensity distributions
+incProgress(1/17, detail = "Plot LabelReport Perturbation (relative intensities)")
+Sys.sleep(0.2)
 
+plotLabelReport(isoLabelReport = labelsPerturbation,
+                intOption = "rel",
+                classes = classes1,
+                labeledSamples = "lSamples",
+                outputfile = file.path(resultsDir, paste0(isoD@pdfRel,"_perturb.pdf")))
+				
 # print pdf of isotopologue groups in a single labeling report plotted as absolute intensity distributions
-incProgress(1/15, detail = "Plot LabelReport (absolute intensities)")
+incProgress(1/17, detail = "Plot LabelReport Control (absolute intensities)")
 Sys.sleep(0.2)
 
 plotLabelReport(isoLabelReport = labelsCtrl,
                 intOption = "abs",
                 classes = classes1,
                 labeledSamples = "lSamples",
-                outputfile = file.path(resultsDir, paste0(isoD@pdfAbs,".pdf")))
+                outputfile = file.path(resultsDir, paste0(isoD@pdfAbs,"_control.pdf")))
+
+# print pdf of isotopologue groups in a single labeling report plotted as absolute intensity distributions
+incProgress(1/17, detail = "Plot LabelReport Perturbation (absolute intensities)")
+Sys.sleep(0.2)
+
+plotLabelReport(isoLabelReport = labelsPerturbation,
+                intOption = "abs",
+                classes = classes1,
+                labeledSamples = "lSamples",
+                outputfile = file.path(resultsDir, paste0(isoD@pdfAbs,"_perturb.pdf")))
 
 # print pdf of isotopologue groups from an isoDiff report comparing two conditions; plots are of relative intensity distributions
-incProgress(1/15, detail = "Plot IsoDiffReport")
+incProgress(1/17, detail = "Plot IsoDiffReport")
 Sys.sleep(0.2)
 
 plotIsoDiffReport(isoDiffReport = isoDiff,
@@ -267,7 +287,7 @@ plotIsoDiffReport(isoDiffReport = isoDiff,
 
 # print pdf of isotopologue groups from an isoDiff report comparing two conditions; plots are of absolute intensity distributions combined into total pools;
 # reported p-values are from t-test of total pools (sum of all isotopologues in a group) between conditions
-incProgress(1/15, detail = "Plot TotalIsoPools")
+incProgress(1/17, detail = "Plot TotalIsoPools")
 Sys.sleep(0.2)
 
 plotTotalIsoPools(isoDiffReport = isoDiff,
@@ -284,7 +304,7 @@ plotTotalIsoPools(isoDiffReport = isoDiff,
 
 # obtain a condensed version of the XCMS diffReport using just the C12 samples of control and LPS-treated samples; output is a matrix
 
-incProgress(1/15, detail = "Print miniDiffReport")
+incProgress(1/17, detail = "Print miniDiffReport")
 Sys.sleep(0.2)
 
 miniDiff <- miniDiffReport(xcmsSet = xset3,
@@ -294,7 +314,7 @@ miniDiff <- miniDiffReport(xcmsSet = xset3,
 write.csv(miniDiff, file = file.path(resultsDir,"miniDiffReport.csv"))
 # filters isoDiff report to report back only isotopologue groups that are different between sample classes
 
-incProgress(1/15, detail = "Generate filteredIsoDiff")
+incProgress(1/17, detail = "Generate filteredIsoDiff")
 Sys.sleep(0.2)
 
 filteredIsoDiff <- filterIsoDiffReport(isoDiffReport = isoDiff, alpha = isoD@alpha)
