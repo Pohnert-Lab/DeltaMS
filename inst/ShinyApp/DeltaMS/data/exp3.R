@@ -227,6 +227,9 @@ Sys.sleep(0.2)
 
 printIsoListOutputs(listReport = labelsCtrl,
                     outputfile = file.path(resultsDir,"labelsCtrl.txt"))
+					
+printIsoListOutputs(listReport = labelsPerturbation,
+                    outputfile = file.path(resultsDir,"labelsPerturbation.txt"))
 
 # print pdf of isotopologue groups in a single labeling report plotted as relative intensity distributions
 incProgress(1/17, detail = "Plot LabelReport Control (relative intensities)")
