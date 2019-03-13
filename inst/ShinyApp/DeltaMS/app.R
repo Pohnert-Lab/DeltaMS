@@ -17,18 +17,18 @@ isoDAlt<<-isoD
 
 shinyApp(enableBookmarking = "server", ui = function(req){
     fluidPage(titlePanel(img(src="Penrose.jpg", width="15%"), windowTitle = "DeltaMS"),
-                 extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
+                 shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
 
                  inlineCSS(".green {background: #97a7f2; font-weight: bold;}"),
                  theme = shinytheme("paper"),
                  ttWrap(),
 
   sidebarLayout(sidebarPanel(width = 3,
-                  useShinyjs(),
-                  hidden(actionButton("chDir", "Select folder", icon = icon("folder-open", lib = "glyphicon"))),
+                  shinyjs::useShinyjs(),
+                  shinyjs::hidden(actionButton("chDir", "Select folder", icon = icon("folder-open", lib = "glyphicon"))),
                   actionButton("aboutDeltaMS", " About DeltaMS", icon = icon("info-sign", lib = "glyphicon")),
                   p(),
-                  hidden(actionButton("bookmBtn","Save current state", icon = icon("floppy-disk", lib = "glyphicon"))),
+                  shinyjs::hidden(actionButton("bookmBtn","Save current state", icon = icon("floppy-disk", lib = "glyphicon"))),
                   actionButton("loadB", " Load former state", icon = icon("folder-open", lib = "glyphicon")),
                   textOutput("SaveLoadText"),
                   hr(),textOutput("WD",inline=F),br(),
@@ -37,10 +37,10 @@ shinyApp(enableBookmarking = "server", ui = function(req){
                   div(style="display:inline-block;vertical-align:bottom;",uiOutput("reassignBT")),hr(),
 
 
-                    hidden(
+                    shinyjs::hidden(
                      radioButtons("iOdm",label = NULL, c("Select two isotopes", "Set \u0394 m manually"), inline=FALSE),
                      uiOutput("UIiOdm")),
-                     hidden(actionButton("startAnalysis", "Start Analysis", icon = icon("play-circle", lib = "glyphicon")))
+                     shinyjs::hidden(actionButton("startAnalysis", "Start Analysis", icon = icon("play-circle", lib = "glyphicon")))
                    ),
 
 
@@ -161,8 +161,8 @@ shinyApp(enableBookmarking = "server", ui = function(req){
 
     observeEvent(input$saveFileName,{
       if(!grepl("[[:punct:]]", input$saveFileName) & nzchar(input$saveFileName)){
-      enable("genSave")
-      } else { disable("genSave")}
+      shinyjs::enable("genSave")
+      } else {shinyjs::disable("genSave")}
       })
 
       observeEvent(input$genSave,{
@@ -229,7 +229,7 @@ shinyApp(enableBookmarking = "server", ui = function(req){
     isoDAlt<<-isoD
     isoD@foldersOld<<-""
 
-    alert("You restored saved settings. Select folder with MS files")
+    shinyjs::alert("You restored saved settings. Select folder with MS files")
     })
 
 
@@ -387,19 +387,19 @@ shinyApp(enableBookmarking = "server", ui = function(req){
     lapply(expL, function(i) {
       observeEvent(input[[i]], {
         list<-list("saveB","bookmBtn","iOdm","UIiOdm","chDir", "WD", "FF", "nCoreOut","refreshBtn","loadB")
-        lapply(list, show,anim=FALSE)})
+        lapply(list, shinyjs::show,anim=FALSE)})
       })
 
     observeEvent(input$exp1, {
       isoD@TypeofExp<<-1
-      enable("isot1")
-      enable("isot2")
-      enable("manOrCalc")
-      enable("errRatio")
-      enable("maxSD")
-      addClass("exp1","green")
-      removeClass("exp2", "green")
-      removeClass("exp3", "green")
+      shinyjs::enable("isot1")
+      shinyjs::enable("isot2")
+      shinyjs::enable("manOrCalc")
+      shinyjs::enable("errRatio")
+      shinyjs::enable("maxSD")
+      shinyjs::addClass("exp1","green")
+      shinyjs::removeClass("exp2", "green")
+      shinyjs::removeClass("exp3", "green")
       if(!is.null(isoD@NrFo)){
         if(isoD@NrFo!=0 & isoD@restore == FALSE| isoD@NrFi == 0){
           BtnAct("startAnalysis", "red", "exp")
@@ -414,14 +414,14 @@ shinyApp(enableBookmarking = "server", ui = function(req){
 
     observeEvent(input$exp2, {
       isoD@TypeofExp<<-2
-      enable("isot1")
-      enable("isot2")
-      enable("manOrCalc")
-      enable("errRatio")
-      enable("maxSD")
-      addClass("exp2","green")
-      removeClass("exp1", "green")
-      removeClass("exp3", "green")
+      shinyjs::enable("isot1")
+      shinyjs::enable("isot2")
+      shinyjs::enable("manOrCalc")
+      shinyjs::enable("errRatio")
+      shinyjs::enable("maxSD")
+      shinyjs::addClass("exp2","green")
+      shinyjs::removeClass("exp1", "green")
+      shinyjs::removeClass("exp3", "green")
       if(!is.null(isoD@NrFo)){
         if(isoD@NrFo!=2 & isoD@restore == FALSE| isoD@NrFi == 0){
           BtnAct("reassignSC", "red")
@@ -436,14 +436,14 @@ shinyApp(enableBookmarking = "server", ui = function(req){
 
     observeEvent(input$exp3, {
       isoD@TypeofExp<<-3
-      disable("manOrCalc")
-      disable("isot1")
-      disable("isot2")
-      disable("errRatio")
-      disable("maxSD")
-      addClass("exp3","green")
-      removeClass("exp1", "green")
-      removeClass("exp2", "green")
+      shinyjs::disable("manOrCalc")
+      shinyjs::disable("isot1")
+      shinyjs::disable("isot2")
+      shinyjs::disable("errRatio")
+      shinyjs::disable("maxSD")
+      shinyjs::addClass("exp3","green")
+      shinyjs::removeClass("exp1", "green")
+      shinyjs::removeClass("exp2", "green")
       if("X13CMS" %in% installed.packages()[,"Package"]){
       if(!is.null(isoD@NrFo)){
         if(isoD@NrFo!=4 & isoD@restore == FALSE| isoD@NrFi== 0){
@@ -557,19 +557,19 @@ shinyApp(enableBookmarking = "server", ui = function(req){
                     observeEvent(input$lC, {
                     uC<-c("",c(isoD@folderNames[-which(isoD@folderNames==input$lC)]))
                     updateSelectInput(session, "uC", choices = uC)
-                    toggleState("uC", condition = input$lC!="")
+                    shinyjs::toggleState("uC", condition = input$lC!="")
                     })
 
                     observeEvent(input$uC, {
                     lT<-c("",c(isoD@folderNames[-c(which(isoD@folderNames==input$lC),which(isoD@folderNames==input$uC))]))
                     updateSelectInput(session, "lT", choices = lT)
-                    toggleState("lT", condition = input$uC!="")
+                    shinyjs::toggleState("lT", condition = input$uC!="")
                     })
 
                     observeEvent(input$lT, {
                     uT<-c("",c(isoD@folderNames[-c(which(isoD@folderNames==input$lC),which(isoD@folderNames==input$uC),which(isoD@folderNames==input$lT))]))
                     updateSelectInput(session, "uT", choices = uT)
-                    toggleState("uT", condition = input$lT!="")
+                    shinyjs::toggleState("uT", condition = input$lT!="")
                     })
 
                     observeEvent(input$uT, {
@@ -690,9 +690,9 @@ shinyApp(enableBookmarking = "server", ui = function(req){
 
    observeEvent(input$smooth, {
      if (input$smooth=="loess") {
-       show(id = "span")
+       shinyjs::show(id = "span")
      }else{
-       hide(id ="span")
+       shinyjs::hide(id ="span")
      }
    })
 
@@ -846,7 +846,7 @@ if(isoD@TypeofExp!=3){
 observeEvent(input$startAnalysis,{
   cat("\014")
   
-  disable(id = startAnalysis)
+  shinyjs::disable(id = startAnalysis) # Disable Start analysis button until analysis is finished to prevent multiple activations by chance
 
   # iRatio depending on manually set or natural isotope ratio chosen
   if(isoD@manOrCalc != "Use naturally occuring ratio"){
@@ -884,7 +884,7 @@ if(isoD@TypeofExp==3){
   source("data/exp3.R")
 }
   
-  enable(id = startAnalysis)  
+  shinyjs::enable(id = startAnalysis)  # enable start analysis button again after analysis has finished
   
 })
 
