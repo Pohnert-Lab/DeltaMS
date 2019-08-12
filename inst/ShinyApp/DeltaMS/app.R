@@ -846,7 +846,7 @@ if(isoD@TypeofExp!=3){
 observeEvent(input$startAnalysis,{
   cat("\014")
   
-  shinyjs::disable(id = startAnalysis) # Disable Start analysis button until analysis is finished to prevent multiple activations by chance
+  shinyjs::disable(id = "startAnalysis") # Disable Start analysis button until analysis is finished to prevent multiple activations by chance
 
   # iRatio depending on manually set or natural isotope ratio chosen
   if(isoD@manOrCalc != "Use naturally occuring ratio"){
@@ -884,7 +884,7 @@ if(isoD@TypeofExp==3){
   source("data/exp3.R")
 }
   
-  shinyjs::enable(id = startAnalysis)  # enable start analysis button again after analysis has finished
+  shinyjs::enable(id = "startAnalysis")  # enable start analysis button again after analysis has finished
   
 })
 
