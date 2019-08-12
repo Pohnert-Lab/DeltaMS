@@ -6,8 +6,13 @@
 
 MissingPackagesDeltaMS<-function(){
   if(!"xcms" %in% installed.packages()[,"Package"]){
+	if(compareVersion("3.5", paste0(version$major,version$minor))>=0){
+	install.packages("BiocManager")
+	BiocManager::install("xcms")}
+	else{
     source("https://bioconductor.org/biocLite.R")
     biocLite("xcms")}
+	}
   if(!"X13CMS" %in% installed.packages()[,"Package"]){
     message("X13CMS package is missing. \nTo install X13CMS visit http://pattilab.wustl.edu/software/x13cms/x13cms.php")}
   list.of.packages <- c("shiny","shinyjs","shinyBS","shinythemes","DescTools", "rChoiceDialogs", "multtest", "rmarkdown","V8","rJava")
