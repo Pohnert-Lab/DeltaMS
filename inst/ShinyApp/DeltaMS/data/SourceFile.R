@@ -166,7 +166,7 @@ InputDefaults<- setClass(
 	#Additional variables
 
 	MSFiles     		= "",
-	MSfilePattern 		= "mzxml|mzxml|cdf|mzdata",
+	MSfilePattern 		= "mzxml|mzml|cdf|mzdata",
 	NrFo				= NULL,
 	NrFi        		= 0,
 	restore 			= FALSE,
@@ -184,7 +184,7 @@ InputDefaults<- setClass(
     profparam  			= NULL,
     mslevel    			= 1,
     nSlaves  			= 1,
-    TypeOfExp       	= 1,
+    TypeofExp       	= 1,
     methodPD 			= "centWave",
     isotopeMassDiff   	= 1.003355,
     retMeth  			= "obiwarp",
