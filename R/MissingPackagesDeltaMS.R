@@ -7,7 +7,8 @@
 MissingPackagesDeltaMS<-function(){
   if(!"xcms" %in% installed.packages()[,"Package"]){
 	if(compareVersion("3.5", paste0(version$major,version$minor))>=0){
-	install.packages("BiocManager")
+	if(!"BiocManager" %in% installed.packages()[,"Package"]){
+	install.packages("BiocManager")}
 	BiocManager::install("xcms")}
 	else{
     source("https://bioconductor.org/biocLite.R")
