@@ -6,7 +6,7 @@
 
 MissingPackagesDeltaMS<-function(){
   if(!"xcms" %in% installed.packages()[,"Package"]){
-	if(compareVersion("3.5", paste0(version$major,version$minor))>=0){
+	if(compareVersion("3.5", paste0(version$major,version$minor))<=0){
 	if(!"BiocManager" %in% installed.packages()[,"Package"]){
 	install.packages("BiocManager")}
 	BiocManager::install("xcms")}
