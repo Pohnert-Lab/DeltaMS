@@ -17,8 +17,7 @@ isoDAlt<<-isoD
 
 shinyApp(enableBookmarking = "server", ui = function(req){
     fluidPage(titlePanel(img(src="Penrose.jpg", width="15%"), windowTitle = "DeltaMS"),
-                 shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
-
+                 shinyjs::extendShinyjs(text = "shinyjs.winprint = function() {window.print();}", functions = c("winprint")),
                  inlineCSS(".green {background: #97a7f2; font-weight: bold;}"),
                  theme = shinytheme("paper"),
                  ttWrap(),
